@@ -1,7 +1,7 @@
 import { useState, useEffect, MouseEvent } from "react";
 import { IconButton } from "@mui/material";
 import { useAccount, useMsal } from "@azure/msal-react";
-import { useUserImage, useUserPresence } from "@/client/msal";
+import { useUserImage, useUserPresence } from "@/client/ms-graph";
 import { StatusAvatar } from "@/components";
 import { useTopbar } from "@/components/Layout";
 import { AvatarMenu } from "./AvatarMenu";
