@@ -1,17 +1,11 @@
 import { useEffect } from "react";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider, useAccount, useMsal } from "@azure/msal-react";
-import { msalConfig, clientId, tenantId } from "@/settings/authentication";
+import { msalConfig } from "./msalConfig";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
 export const AuthenticationProvider = ({ children }: any) => {
-  useEffect(() => {
-    if (!clientId || !tenantId) {
-      throw new Error("Missing clientId or tenantId");
-    }
-  }, []);
-
   return (
     <MsalProvider instance={msalInstance}>
       <Authentication>{children}</Authentication>
