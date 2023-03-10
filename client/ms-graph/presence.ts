@@ -1,12 +1,13 @@
 import useSWR, { SWRResponse } from "swr";
 import { fetcherWithToken } from "@/client/common";
 import { useAccessToken } from "./accessToken";
-import { settings } from "./settings";
 import { UserPresence } from "./types";
 
-const proceed = settings.request.scopes.includes("Read.Presence.All");
-
 export const useUserPresence = (userId?: string): SWRResponse<UserPresence> => {
+  const envScopes = process.env.NEXT_PUBLIC_MS_GRAPH_SCOPES || "";
+  const scopes = envScopes.split(" ");
+  const proceed = scopes.includes("Read.Presence.All");
+
   const { data } = useAccessToken({ proceed });
 
   const url = userId
