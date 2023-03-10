@@ -2,19 +2,21 @@ import { useEffect, useState } from "react";
 import { useMsal } from "@azure/msal-react";
 import { RedirectRequest } from "@azure/msal-browser";
 
-type UseAccessToken = { scopes?: RedirectRequest["scopes"]; proceed?: boolean };
+type UseMsalTokenProps = {
+  scopes: RedirectRequest["scopes"];
+  proceed: boolean;
+};
 
-type UseAccessTokenResponse = {
+export type UseAccessTokenProps = { proceed?: boolean };
+
+export type UseMsalToken = {
   data: string;
   isLoading: boolean;
   error: boolean;
 };
 
-export const useAccessToken = (
-  props?: UseAccessToken
-): UseAccessTokenResponse => {
-  const { scopes = [] } = props || {};
-  const { proceed = true } = props || {};
+export const useMsalToken = (props: UseMsalTokenProps): UseMsalToken => {
+  const { proceed = true, scopes } = props || {};
 
   const { instance } = useMsal();
   const [data, setData] = useState<string>("");
@@ -24,9 +26,8 @@ export const useAccessToken = (
   const [expiresOn, setExpiresOn] = useState<Date>();
 
   if (expiresOn) {
-    const expired = expiresOn < new Date();
+    const expired = new Date(expiresOn) < new Date();
     if (expired && valid) {
-      console.log("Invalidating Access Token...");
       setValid(false);
     }
   }
@@ -35,8 +36,8 @@ export const useAccessToken = (
     const getToken = async () => {
       const account = instance.getAllAccounts()[0];
 
-      if (account && !valid) {
-        const req = { scopes, account };
+      if (account || valid) {
+        const req = { scopes: scopes!, account };
         console.log("Acquiring Access Token...");
         await instance
           .acquireTokenSilent(req)

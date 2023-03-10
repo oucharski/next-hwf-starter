@@ -1,2 +1,2 @@
-export * from "./accessToken";
+export * from "./msalToken";
 export * from "./fetchers";
