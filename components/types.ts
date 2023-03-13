@@ -7,3 +7,4 @@ export * from "./Loader/types";
 export * from "./SimpleTable/types";
 export * from "./SplashScreen";
 export * from "./StatusAvatar/types";
+export * from "./UserAvatarInfo/types";

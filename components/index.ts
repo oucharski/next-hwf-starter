@@ -7,3 +7,4 @@ export { Loader } from "./Loader";
 export { SimpleTable } from "./SimpleTable";
 export { SplashScreen } from "./SplashScreen";
 export { StatusAvatar } from "./StatusAvatar";
+export { UserAvatarInfo } from "./UserAvatarInfo";
