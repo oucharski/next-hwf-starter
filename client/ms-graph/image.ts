@@ -11,5 +11,7 @@ export const useUserImage = (userId?: string): SWRResponse<string> => {
 
   const args = [url, data];
 
-  return useSWR(args, ([url, token]) => fetcherBlobWithToken(url, token));
+  return useSWR(args, ([url, token]) =>
+    fetcherBlobWithToken(url, token, "/profile_placeholder.png")
+  );
 };
