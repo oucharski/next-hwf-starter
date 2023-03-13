@@ -23,7 +23,8 @@ export const fetcherWithToken = async (url: string, token: string) => {
 
 export const fetcherBlobWithToken = async (
   url: string,
-  token: string
+  token: string,
+  fallback?: string
 ): Promise<string> => {
   if (token && typeof window !== "undefined") {
     const headers = getHeaders(token);
@@ -34,13 +35,18 @@ export const fetcherBlobWithToken = async (
       })
       .catch((e) => {
         console.error(e);
-        return { data: "" };
+        return { data: fallback };
       });
+
+    if (fallback && res.data === fallback) {
+      return fallback;
+    }
 
     const _url = window.URL || window.webkitURL;
     const blobUrl = _url.createObjectURL(res.data);
+
     return blobUrl;
   }
 
-  return "";
+  return fallback || "";
 };
